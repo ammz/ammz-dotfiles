@@ -1,0 +1,7 @@
+#! /bin/bash
+if [ -n "$1" ]; then
+    ssh $1@s15381244.onlinehome-server.info
+else
+    ssh ammz@s15381244.onlinehome-server.info
+fi
+

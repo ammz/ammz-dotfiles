@@ -1,0 +1,35 @@
+#! /usr/local/bin/bash
+if [ -n "$1" ]
+then
+	fecha=`date +%Y%m%d`
+	mysqldump -c -u root -p'kal8493' -B $1 | bzip2 > $1-$fecha.sql.bz2
+	# scp $1-$fecha.sql.bz2 ammz@85.136.22.26:/Users/ammz/www/backups/.
+	# rm $1-$fecha.sql.bz2
+else
+	echo '-------------------------------------------------------------'
+	echo ' Se hace un backup de la página web y la base datos:         '
+	echo '      ./bbd paginaweb                                        '
+	echo '                                                             '
+	echo '  (la base de datos y el directorio donde se aloja siempre   '
+	echo '   siempre deben coincidir)                                  '
+	echo '-------------------------------------------------------------'
+fi
+
+# 
+# Esto está para poder hacer backups de varias webs al mismo tiempo
+# aunque ahora solo lo uso con una.
+# 
+DIRECTORIOS=($1)
+typo=/www/typo3
+
+for web in "${DIRECTORIOS[@]}"
+	do
+		filename="$web"-`date +%Y%m%d`.tar
+		tar -c -C /$typo/"$web"/ -f $filename fileadmin uploads typo3conf  --exclude=typo3conf/temp_CACHED*
+		bzip2 -z -9 $filename
+		# scp *.bz2 ammz@85.136.8.196:/Users/ammz/Backups/"$web"/.
+		# scp *.bz2 ammz@u1050.c03.escapebox.net:/home/ammz/backup/.
+		# scp *.bz2 deversorius@deversorius.strongspace.com:/home/deversorius/backup/"$web"/.
+		# scp *.bz2 ammz@u1083.c03.escapebox.net:/home/ammz/backup/.
+		# rm *.bz2
+	done

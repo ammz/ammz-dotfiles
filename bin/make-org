@@ -1,0 +1,22 @@
+#! /bin/sh
+#
+# make-org -- generates an org-mode file from a directory of PDFs
+#
+# AUTHOR:
+#   Jon-Michael Deldin
+# USAGE:
+#   cd ~/path/to/papers && make-org > papers.org
+#
+
+echo "#+TITLE:   Libros nuevos"
+echo "#+STARTUP: align hidestars indent lognotedone"
+echo
+
+for f in *.pdf; do
+    name=${f%.*} # strip extension
+    path=$(echo $f | sed 's/ /%20/') # encode spaces as %20
+    echo "* TODO $name :unread:"
+    echo
+    echo "[[file:$path][$name]]"
+    echo
+done

@@ -1,0 +1,4 @@
+#!/bin/bash
+# admin - un script para ejecutar el proyecto en modo desarrollo
+export DJANGO_SETTINGS_MODULE=ecommerce_book.settings
+django-admin.py $@

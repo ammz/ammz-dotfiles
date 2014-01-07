@@ -1,0 +1,3 @@
+#!/bin/sh
+
+~/bin/sshfs ammz@10.0.1.4:/ /FUSE -oreconnect,volname=CentOS

@@ -1,0 +1,23 @@
+.DS_Store
+*~
+\#*\#
+.\#*
+*.dat
+*.elc
+
+.emacs.desktop
+.emacs.desktop.lock
+auto-save-list
+bookmarks
+emms
+history
+tramp
+url
+image-dired
+projectile-bookmarks.eld
+eshell
+
+# Org-mode
+.org-id-locations
+*_archive
+

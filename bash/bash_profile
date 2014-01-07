@@ -1,0 +1,90 @@
+# Cualquier configuración que añadamos a .bash_profile no será efetiva
+# hasta que salgamos de la cuenta y volvamos a logarnos, si hacemos
+# cambios en este fichero y queremos verlos sin salir de la cuenta
+# podemos usar el comando source, el cual ejecuta el contenido del
+# fichero que le digamos:
+#
+# $ source .bash_profile
+#
+# Alternativamente al comando source está el comando punto (.), con lo
+# que el contenido de .bash_profile también se podría haber ejecutado
+# así:
+#
+# $ . .bash_profile
+#
+# Bash permite usar dos nombre alternativos para .bash_profile por
+# razones de compatibilidad histórica: .bash_login, nombre derivado del
+# fichero .login del C Shell, y .profile nombre usado por el Bourne
+# Shell y el Korn Shell. En cualquier caso, sólo uno de estos ficheros
+# será ejecutado. Si .bash_profile existe los demás serán ignorados,
+# sino Bash compruebará si existe .bash_login y, sólo si éste tampoco
+# existe, comprueba si existe .profile. La razón por la que se eligió
+# este orden de búsqueda es que podemos almacenar en .profile opciones
+# propias del Bourne Shell, y añadir opciones exclusivas de Bash en el
+# fichero .bash_profile seguido del comando source .profile para que
+# Bash también cargue las opciones del fichero .profile.
+#
+# .bash_profile se ejecuta sólo al logarnos, si abrimos otro shell
+# (ejecutando bash o su) desde la línea de comandos de Bash lo que se
+# intenta ejecutar es el contenido de .bashrc. Si .bashrc no existe no
+# se ejecutan configuraciones adicionales al abrir un nuevo shell. Este
+# esquema nos permite separar configuraciones que se hacen una sola vez,
+# al logarnos, de configuraciones que se cambian cada vez que se abre un
+# nuevo shell. Si hay configuraciones en .bashrc que también queremos
+# ejecutar al logarnos podemos poner source .bashrc dentro del fichero
+# bash_profile.
+
+export CLICOLOR=1
+export TERM=xterm-color
+export LESSCHARSET=utf-8
+export LC_ALL=es_ES.UTF-8
+export LANG=es_ES.UTF-8
+
+alias ls='ls -G'
+alias ll='ls -la'
+alias la='ls -a'
+alias tree=tree.sh
+alias ec='emacsclient -n'
+
+export HOMEBREW_KEEP_INFO=1
+export INFOPATH=/usr/local/share/info:/usr/local/share/info/emacs:/usr/share/info
+
+export GROFF_TMAC_PATH=$HOME/.mom
+
+export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
+export PATH=/usr/texbin:$PATH
+export PATH=/Applications/ConTeXt/tex/texmf-osx-64/bin:$PATH
+export PATH=$HOME/.cabal/bin:$PATH
+
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/dev
+source /usr/local/bin/virtualenvwrapper.sh
+
+export DISPLAY=:0.0
+
+export OSFONTDIR="/Library/Fonts;/Users/ammz/Library/Fonts"
+
+alias showhidden="defaults write com.apple.finder AppleShowAllFiles TRUE && killall Finder"
+alias hidehidden="defaults write com.apple.finder AppleShowAllFiles FALSE && killall Finder"
+
+# source $HOME/.profile
+
+# export DYLD_LIBRARY_PATH=/usr/lib
+
+# Recomendado por la documentación de brew
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+. $(brew --prefix)/etc/bash_completion
+fi
+
+RED="\[\033[0;31m\]"
+YELLOW="\[\033[0;33m\]"
+GREEN="\[\033[0;32m\]"
+
+PS1="$GREEN\w\e[0m\n\h`__git_ps1`\$ "
+
+# Recomendado por la documentación de RVM
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+
+export EDITOR=ec
+export EDITOR_ALTERNATIVE=em
+
